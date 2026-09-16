@@ -1,40 +1,108 @@
 
-# [Nome da aplicação]
+# Caronas UTFPR
 
-[Breve descrição: o tema do semestre e o escopo/identidade da SUA equipe.]
+Aplicação web para facilitar a organização de caronas entre estudantes da UTFPR, conectando motoristas e passageiros por origem, destino e caminho desejado. O objetivo é reduzir a fricção na busca por transporte, aumentar a segurança e dar mais previsibilidade ao processo de combinar caronas.
 
 ## Autores
 
-- [Nome completo — GitHub]
+- Gabriel Campos — @GabrielCamposManzole
 
 ## Documentação Técnica
 
 - [PRD](docs/prd.md) · [Architecture/SSD](docs/architecture.md) · [Checklist](docs/checklist.md)
-- **Protótipo (Stitch/Figma):** [link público]
+- **Protótipo (Stitch/Figma):** em desenvolvimento / link público em breve
 
 ## Modelagem de Dados (Diagrama ER)
 
 ```mermaid
 erDiagram
+    USUARIO ||--o{ CARONA : publica
+    USUARIO ||--o{ PEDIDO : realiza
+    USUARIO ||--o{ AVALIACAO : recebe
+    CARONA ||--o{ SOLICITACAO : recebe
+    PEDIDO ||--o{ SOLICITACAO : gera
+    CARONA ||--o{ AVALIACAO : avalia
+
+    USUARIO {
+        string id
+        string nome
+        string email
+        string tipo
+        boolean ativo
+    }
+
+    CARONA {
+        string id
+        string motoristaId
+        string origem
+        string destino
+        string horario
+        int vagas
+        string status
+    }
+
+    PEDIDO {
+        string id
+        string passageiroId
+        string origem
+        string destino
+        string caminhoDesejado
+        string status
+    }
+
+    SOLICITACAO {
+        string id
+        string caronaId
+        string pedidoId
+        string status
+    }
+
+    AVALIACAO {
+        string id
+        string usuarioId
+        string tipo
+        int nota
+        string comentario
+    }
 ```
 
 ## Stack
 
-- **Frontend:** Angular [versão]
-- **Framework CSS:** [Tailwind, PrimeNG, …]
-- **Dados:** json-server (MVP/E2) → [Supabase, PocketBase, …] (E3)
-- **Bibliotecas:** [lista]
+- **Frontend:** Angular 20+
+- **Framework CSS:** Tailwind CSS
+- **Dados:** json-server (MVP/E2) → Supabase (E3)
+- **Bibliotecas:** Angular Router, Angular Forms, RxJS, Mermaid
 
 ## Em produção
 
-- **Aplicação:** [URL no Vercel/Render]
+- **Aplicação:** em desenvolvimento
 
 ## Instruções de Execução
 
-[Passos para configurar e rodar localmente — gerado/refinado no `/utf-setup`.]
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/GabrielCamposManzole/caronai.git
+   cd caronai
+   ```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Execute a aplicação localmente:
+   ```bash
+   npm start
+   ```
+4. Acesse a aplicação no navegador no endereço indicado pelo Angular CLI.
+
+> Para a fase MVP, a aplicação pode consumir dados locais via json-server ou mock de dados, conforme a implementação do projeto.
 
 ## Telas da Aplicação
 
-[Imagens de algumas telas.]
+- Tela inicial com visão geral da plataforma
+- Busca de caronas por origem e destino
+- Publicação de oferta de carona
+- Gerenciamento de solicitações e confirmações
+- Histórico de viagens e avaliações
+
 
 
